@@ -1,0 +1,43 @@
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background-color: $white;
+  word-wrap: break-word;
+
+  &__body {
+    flex: 1 1 auto;
+    padding: $spacing-x;
+  }
+
+  &__title {
+    display: flex;
+    align-items: center;
+    margin: 0 0 $spacing-y;
+
+    &__button {
+      margin-left: 0.5rem;
+    }
+
+    &::before {
+      display: inline-block;
+      margin-right: $spacing-y;
+      margin-left: -$spacing-y;
+      width: 2px;
+      height: 30px;
+      background: $brand-primary;
+      content: '';
+    }
+  }
+
+  &__subtitle {
+    margin-top: -($spacing-y / 2);
+    margin-bottom: 0;
+  }
+
+  &--fullscreen {
+    padding-top: rem(125px);
+    min-height: 100vh;
+  }
+}

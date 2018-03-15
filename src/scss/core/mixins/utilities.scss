@@ -1,0 +1,8 @@
+//
+// Use this function to conver # to %23
+// This is neccessary for Firefox to render SVG properly
+//
+@function hexToUrl($color) {
+    $newcolor: str-replace($color, '#', '%23');
+    @return $newcolor;
+}

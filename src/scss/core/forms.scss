@@ -1,0 +1,49 @@
+label {
+  display: inline-block;
+  margin-bottom: $spacing-y-small;
+  font-weight: $font-weight-normal;
+}
+
+.form-group {
+  margin-bottom: $spacing-x;
+
+  &__text {
+    display: inline-block;
+    margin: $spacing-y-small 0;
+    color: $text-muted;
+    font-size: 80%;
+  }
+}
+
+.form-control {
+  display: inline-block;
+  padding: $spacing-y-small $spacing-x;
+  width: 100%;
+  border: 1px solid $gray-lighter;
+  border-radius: $border-radius-large;
+  color: $text-color;
+  font-weight: $font-weight-light;
+  font-family: $font-family-base;
+
+  @include transition(all);
+
+  &:focus {
+    border-color: $gray-light;
+  }
+
+  &[readonly] {
+    background-color: $gray-lightest;
+    color: $gray-light;
+  }
+
+  &--autogrow {
+    min-height: rem(70px);
+  }
+}
+
+select.form-control {
+  padding-right: ($spacing-x-large * 2);
+  background: $select-indicator no-repeat right $spacing-x-small center;
+
+  appearance: none;
+}

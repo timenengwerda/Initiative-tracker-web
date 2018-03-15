@@ -1,0 +1,37 @@
+.sortable {
+    margin: 1rem 0 0;
+    padding: 0;
+    border: 1px solid $gray-lighter;
+    border-bottom: 0;
+    border-radius: $border-radius;
+    background-color: $white;
+    list-style: none;
+
+    & > li {
+        display: flex;
+        justify-content: space-between;
+        padding: .6rem 1rem;
+        border-bottom: 1px solid $gray-lighter;
+        cursor: move;
+    }
+
+    & > div.sortable-ghost {
+        background-color: $black;
+        opacity: .2;
+    }
+}
+
+
+li.sortable-ph {
+    display: block;
+    height: 35px;
+    background: $black;
+    opacity: .3;
+}
+
+li.ui-sortable-helper {
+    overflow: hidden;
+    max-height: 85px !important;
+    background: $white;
+    opacity: .8;
+}

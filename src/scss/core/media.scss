@@ -1,0 +1,14 @@
+img {
+    display: block;
+    max-width: 100%;
+}
+
+figure {
+    margin: rem(20px) 0;
+
+    figcaption {
+        color: $text-muted;
+        font-size: 80%;
+        margin: rem(10px) 0;
+    }
+}

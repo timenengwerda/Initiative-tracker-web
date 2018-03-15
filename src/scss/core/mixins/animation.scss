@@ -1,0 +1,32 @@
+@mixin animation($property, $duration...) {
+  @if length($duration) == 0 {
+    animation: $property $animation-duration-base $animation-timing-function;
+  } @else {
+    animation: $property $duration $animation-timing-function;
+  }
+}
+
+/*Radio button*/
+@keyframes ripple {
+  0% {
+    box-shadow: 0 0 0 1px transparent;
+  }
+  50% {
+    box-shadow: 0 0 0 15px rgba($black, 0.1);
+  }
+  100% {
+    box-shadow: 0 0 0 15px transparent;
+  }
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

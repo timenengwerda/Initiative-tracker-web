@@ -1,0 +1,47 @@
+.enemy-list {
+  display: flex;
+  align-items: center;
+
+  &__info {
+    flex: 1;
+    font-size: 18px;
+  }
+
+  &__damage-form {
+    margin: 0;
+    max-width: 75px;
+    background: none;
+
+    &__health {
+      margin: 0 0 0 1rem;
+      padding: 0.5rem;
+      border-radius: 3px;
+      background-color: $brand-success;
+      color: $white;
+    }
+  }
+
+  &__damage-form .form-group {
+    margin: 0;
+  }
+
+  &__buffs {
+    display: flex;
+
+    .form-group {
+      margin-right: 1rem;
+
+      label {
+        margin: 0;
+        line-height: 1.6;
+      }
+    }
+  }
+}
+.enemy {
+  &__dragger {
+    margin-top: 1rem;
+    margin-right: 1rem;
+    color: $gray-lighter;
+  }
+}

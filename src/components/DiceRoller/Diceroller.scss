@@ -1,0 +1,99 @@
+.dice-group {
+  flex: 1;
+  margin-right: 5px;
+}
+
+.dice-roller {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    max-width: 400px;
+    height: 50px;
+    border-radius: 20px 20px 0 0;
+    background-color: rgba($white, .95);
+    box-shadow: 0 1px 3px rgba($black, .3);
+    transition: height .22s ease-out;
+
+    backdrop-filter: blur(4px);
+
+    &--expanded {
+      /* We need a height for transitions to work properly */
+      height: 240px;
+    }
+
+    &__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem;
+      border-bottom: 1px solid rgba($black, .1);
+      cursor: pointer;
+
+      &__title {
+        margin: 0;
+      }
+    }
+
+    &__body {
+      padding: 1rem 2rem;
+    }
+
+    &__outcome {
+      margin-bottom: 1rem;
+      padding: .5rem 1rem;
+      border-radius: 5px;
+      background-color: rgba($black, .075);
+      font-size: 1.75rem;
+
+      user-select: none;
+    }
+}
+
+.dice-group-list {
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  &__item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 150px;
+
+    &:hover {
+      height: 85px;
+    }
+
+    &:hover .dice-group {
+      margin-top: 50px;
+      width: 110px;
+      opacity: 1;
+    }
+
+    button {
+      padding: 10px;
+    }
+  }
+}
+
+.dice-group {
+  position: absolute;
+  z-index: 3;
+  display: flex;
+  overflow: hidden;
+  justify-content: center;
+  margin-top: 0;
+  width: 0px;
+  opacity: 0;
+  transition: all .15s ease-in-out;
+
+  &__item {
+    margin-left: 3px;
+    padding: 8px !important;
+    font-size: 11px !important;
+  }
+}

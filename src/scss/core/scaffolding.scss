@@ -1,0 +1,79 @@
+* {
+  box-sizing: border-box;
+  outline: 0;
+
+  backface-visibility: hidden;
+}
+
+html {
+  min-height: 100vh;
+
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  min-height: 100vh;
+  background-color: $body-background;
+  color: $text-color;
+  font-weight: $font-weight-light;
+  font-size: $font-size-base;
+  font-family: $font-family-base;
+  line-height: $line-height-base;
+
+  &.has--nav--fixed {
+    padding-top: rem(150px);
+  }
+
+  &.no-scroll {
+    overflow: hidden;
+  }
+}
+
+.logo {
+  &--centered {
+    margin: 0 auto 3rem;
+  }
+}
+
+hr {
+  margin: $spacing-y-large 0;
+  border: 0;
+  border-bottom: 1px solid $gray-lightest;
+}
+
+.material-icons {
+  vertical-align: middle;
+  font-size: rem(20px);
+}
+
+.text--center {
+  text-align: center;
+}
+
+.text--right {
+  text-align: right;
+}
+
+// sass-lint:disable no-ids
+#main-wrapper {
+  min-height: 100vh;
+  width: 100%;
+}
+
+.container--fullscreen {
+  min-height: 100vh;
+  background-image: url('/images/background-drops.png');
+
+  > .grid {
+    min-height: 100vh;
+  }
+}
+
+.sweet-alert p {
+  //sasslint disable-next-line no-important
+  margin-bottom: 1rem !important;
+}
+
+.animation--fadeInOut {
+  animation: fadeInOut 1.5s linear infinite;
+}

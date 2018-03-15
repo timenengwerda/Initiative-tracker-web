@@ -1,0 +1,215 @@
+@mixin _assert-ascending($map, $map-name) {
+  $prev-key: null;
+  $prev-num: null;
+
+  @each $key, $num in $map {
+    $prev-key: $key;
+    $prev-num: $num;
+    // sass-lint:disable no-empty-rulesets
+    @if $prev-num == null {
+      // Do nothing
+    } @else if not comparable($prev-num, $num) {
+      @warn 'Potentially invalid value for #{$map-name}: This map must be in ascending order,
+        but key '#{$key}' has value #{$num} whose unit makes it incomparable to #{$prev-num},
+        the value of the previous key '#{$prev-key}' !';
+    } @else if $prev-num >= $num {
+      @warn 'Invalid value for #{$map-name}: This map must be in ascending order,
+        but key '#{$key}' has value #{$num} which isn&acute;t greater than #{$prev-num},
+        the value of the previous key '#{$prev-key}' !';
+    }
+  }
+}
+
+// Replace `$search` with `$replace` in `$sƒtring`
+// @author Hugo Giraudel
+// @param {String} $string - Initial string
+// @param {String} $search - Substring to replace
+// @param {String} $replace ('') - New value
+// @return {String} - Updated string
+@function str-replace($string, $search, $replace: '') {
+  $index: str-index($string, $search);
+
+  @if $index {
+    @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+  }
+
+  @return $string;
+}
+
+@mixin _assert-starts-at-zero($map) {
+  $values: map-values($map);
+  $first-value: nth($values, 1);
+
+  @if $first-value != 0 {
+    @warn 'First breakpoint in `$grid-breakpoints` must start at 0,
+      but starts at #{$first-value}.';
+  }
+}
+
+//
+// Colors
+//
+$black: #000000;
+$white: #ffffff;
+
+$gray-dark: #2b2b2b;
+$gray: #455a64;
+$gray-light: #8f9ba1;
+$gray-lighter: #cccccc;
+$gray-lightest: #e6e6e6;
+
+$brand-primary: #24c0f0;
+$brand-secondary: #bc5151;
+$brand-success: #038d4c;
+$brand-success-light: #eafff8;
+$brand-info: $brand-primary;
+$brand-info-light: #e6eeff;
+$brand-warning: #f0ad4e;
+$brand-warning-light: #fff5e8;
+$brand-danger: #ff6b46;
+$brand-danger-light: #fff0ec;
+
+$form-toggle-color: $brand-primary;
+
+//
+// Global
+//
+$body-background: #f4f6f9;
+
+$border-radius: 0.25rem;
+$border-radius-large: 0.5rem;
+
+$box-shadow-base: 0 5px 10px -5px rgba(0, 0, 0, 0.25);
+$box-shadow-large: 0 10px 15px -5px rgba(0, 0, 0, 0.25);
+
+$text-color: #67757c;
+$text-muted: $gray-light;
+
+//
+// Dropzone
+//
+$dropzone-gap-size: 15px;
+$dropzone-preview-count: 3;
+$dropzone-preview-size: 268px;
+
+//
+// Forms
+// Using inline SVG, encoded with https://yoksel.github.io/url-encoder/
+//
+$select-indicator-color: $text-color;
+$select-indicator: url('data:image/svg+xml,%3Csvg fill="#{$select-indicator-color}" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M7.41 7.84L12 12.42l4.59-4.58L18 9.25l-6 6-6-6z"/%3E%3Cpath d="M0-.75h24v24H0z" fill="none"/%3E%3C/svg%3E');
+
+//
+// Links
+//
+$link-color: $brand-info;
+$link-border: 2px solid $gray;
+$link-hover-color: darken($link-color, 15%);
+$link-hover-border: 2px solid $link-hover-color;
+
+//
+// Breakpoints
+//
+$grid-breakpoints: (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1300px) !default;
+@include _assert-ascending($grid-breakpoints, '$grid-breakpoints');
+@include _assert-starts-at-zero($grid-breakpoints);
+
+//
+// Grid containers
+//
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1280px
+);
+@include _assert-ascending($container-max-widths, '$container-max-widths');
+
+//
+// Grid
+//
+$grid-column-count: 12;
+$grid-horizontal-gutter: 15px;
+$grid-vertical-gutter: 15px;
+
+//
+// Fonts
+//
+$font-family-sans-serif: 'Open Sans', -apple-system, system-ui,
+  BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+$font-family-serif: Georgia, 'Times New Roman', Times, serif;
+$font-family-base: $font-family-sans-serif;
+$font-family-headings: 'Patua One';
+
+$font-size-base-px: 16px; // Set the base font size in pixels – we don't want to use the browsers default
+$font-size-base: 1rem;
+$font-size-lg: 1.25rem;
+$font-size-sm: 0.875rem;
+$font-size-xs: 0.75rem;
+
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-bold: 700;
+
+$line-height-base: 1.25;
+$font-size-h1: 1.25rem;
+$font-size-h2: 1.15rem;
+$font-size-h3: 1rem;
+$font-size-h4: 1rem;
+$font-size-h5: 1rem;
+$font-size-h6: 1rem;
+
+//
+// Icons
+//
+$icon-font-family: 'Material Icons';
+
+//
+// Navigation, toasts and bottom-sheet elements
+//
+$navigation-height: 2.875rem; // ~46px
+$toast-height: 2rem;
+$bottom-sheet-height: 4rem;
+
+//
+// Spacing
+//
+$spacing-x: 1rem;
+$spacing-y: 1rem;
+
+$spacing-x-tiny: ($spacing-x * 0.25);
+$spacing-y-tiny: ($spacing-y * 0.25);
+$spacing-x-extra-small: ($spacing-x * 0.5);
+$spacing-y-extra-small: ($spacing-y * 0.5);
+$spacing-x-small: ($spacing-x * 0.75);
+$spacing-y-small: ($spacing-y * 0.75);
+$spacing-x-large: ($spacing-x * 1.25);
+$spacing-y-large: ($spacing-y * 1.25);
+$spacing-x-extra-large: ($spacing-x * 1.5);
+$spacing-y-extra-large: ($spacing-y * 1.5);
+$spacing-x-huge: ($spacing-x * 2);
+$spacing-y-huge: ($spacing-y * 2);
+
+//
+// Padding
+//
+$padding-base: $spacing-y $spacing-x;
+$padding-sm: ($spacing-y * 0.075) ($spacing-x * 0.25);
+
+//
+// Transitions
+//
+$transition-duration-mobile: 0.25s;
+
+// Transitions on a tablet should be around 50-60% longer than on mobile
+$transition-duration-tablet: ($transition-duration-mobile * 1.6);
+
+$transition-duration-slow: ($transition-duration-mobile * 8);
+
+// On desktop transitions should be fast
+$transition-duration-base: 0.15s;
+
+$transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+
+$animation-duration-base: 0.3s;
+$animation-timing-function: cubic-bezier(0, 0, 0.2, 1);

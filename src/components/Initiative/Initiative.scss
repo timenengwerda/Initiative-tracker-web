@@ -1,0 +1,28 @@
+.initiative {
+    &__title-col.col {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 2rem;
+    }
+
+    &__list {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        list-style: none;
+
+        &__player {
+            justify-content: space-between;
+        }
+
+        &__enemy-list {
+            padding: 0 .5rem;
+            border-bottom: 1px solid $gray-lightest;
+
+            &:last-child {
+                border: 0;
+            }
+        }
+    }
+}

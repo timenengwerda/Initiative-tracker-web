@@ -1,0 +1,13 @@
+.player {
+  display: flex;
+  align-items: center;
+
+  &__title {
+    flex: 1;
+    margin: 0 1rem;
+  }
+
+  &__dragger {
+    color: $gray-lighter;
+  }
+}

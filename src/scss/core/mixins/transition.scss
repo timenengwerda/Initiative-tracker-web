@@ -1,0 +1,7 @@
+@mixin transition($property, $duration...) {
+    @if length($duration) == 0 {
+        transition: $property $transition-duration-base $transition-timing-function;
+    } @else {
+        transition: $property $duration $transition-timing-function;
+    }
+}

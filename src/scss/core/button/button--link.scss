@@ -1,0 +1,23 @@
+.button--link {
+  background-color: transparent;
+  color: $link-color;
+
+  &:hover {
+    border-color: transparent;
+    background-color: transparent;
+    color: $link-hover-color;
+    text-decoration: none;
+  }
+
+  &:focus,
+  &.focus {
+    border-color: transparent;
+    box-shadow: none;
+    text-decoration: none;
+  }
+
+  &:disabled,
+  &.disabled {
+    color: $text-muted;
+  }
+}

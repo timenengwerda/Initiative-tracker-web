@@ -1,0 +1,9 @@
+.button--secondary {
+  background-color: $brand-secondary;
+  color: $white;
+
+  &:hover,
+  &:focus {
+      background-color: darken($brand-secondary, 13%);
+  }
+}

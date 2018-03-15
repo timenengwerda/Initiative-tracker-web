@@ -1,0 +1,53 @@
+.button {
+  display: inline-block;
+  padding: $spacing-y-small $spacing-x;
+  border: 1px solid transparent;
+  border-radius: $border-radius;
+  vertical-align: middle;
+  text-align: center;
+  white-space: nowrap;
+  font-weight: $font-weight-light;
+  font-size: $font-size-base;
+  font-family: $font-family-base;
+  cursor: pointer;
+  transition: all 0.2s ease-in;
+
+  user-select: none;
+  -webkit-font-smoothing: auto;
+
+  &:hover,
+  &:focus {
+    text-decoration: none;
+  }
+
+  &[disabled],
+  &.disabled,
+  &[disabled]:hover,
+  &.disabled:hover {
+    background-color: $gray-lighter;
+    color: $gray-lightest;
+    cursor: not-allowed;
+  }
+}
+
+//
+// Button Sizes
+//
+.button--small {
+  padding: 0.5rem;
+  font-weight: $font-weight-normal;
+  font-size: $font-size-xs;
+}
+
+.button--large {
+  padding: 0.75rem 1.5rem;
+  font-size: $font-size-lg;
+}
+
+input[type='submit'],
+input[type='reset'],
+input[type='button'] {
+  &.button--block {
+    width: 100%;
+  }
+}

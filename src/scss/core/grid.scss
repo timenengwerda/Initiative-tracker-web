@@ -1,0 +1,164 @@
+.grid {
+  margin: 0 auto;
+  padding: 0 $grid-horizontal-gutter;
+  max-width: map-get($container-max-widths, 'xl');
+
+  &--fluid {
+    max-width: 100%;
+  }
+
+  &--no-gutter {
+    padding: 0;
+  }
+
+  &--flex {
+    display: flex;
+  }
+}
+
+.row {
+  display: flex;
+  flex: 0 1 100%;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 0 ($grid-horizontal-gutter * -1) $grid-vertical-gutter;
+  padding: 0;
+  list-style: none;
+
+  &--align-top {
+    align-items: flex-start;
+  }
+
+  &--align-center {
+    align-items: center;
+  }
+
+  &--align-bottom {
+    align-items: flex-end;
+  }
+
+  &--reverse {
+    flex-direction: row-reverse;
+  }
+
+  &--no-gutter {
+    margin-bottom: 0;
+  }
+}
+
+.col {
+  flex-grow: 1;
+}
+
+[class^='col-'],
+.col {
+  display: block;
+  padding: 0 $grid-horizontal-gutter;
+  width: 100%;
+
+  &--align-top {
+    align-self: flex-start;
+  }
+
+  &--align-center {
+    align-self: center;
+  }
+
+  &--align-bottom {
+    align-self: flex-end;
+  }
+
+  &--flex {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &--order-first {
+    order: -1;
+  }
+
+  &--order-last {
+    order: $grid-column-count;
+  }
+
+  &--order-reset {
+    order: 0;
+  }
+}
+
+// Create the actual grid columns
+@for $i from 1 through $grid-column-count {
+  .col-#{$i} {
+    width: ($i / $grid-column-count) * 100%;
+  }
+}
+
+// Create offsets
+@for $i from 1 through ($grid-column-count - 1) {
+  .col--offset-#{$i} {
+    margin-left: ($i / $grid-column-count) * 100%;
+  }
+}
+
+@each $breakpoint, $width in $grid-breakpoints {
+  @if $breakpoint != 'xs' {
+    // skip XS. We've defined that above without a prefix
+    @include media-breakpoint-up($breakpoint) {
+      .row--align-#{$breakpoint}-top {
+        align-items: flex-start;
+      }
+
+      .row--align-#{$breakpoint}-center {
+        align-items: center;
+      }
+
+      .row--align-#{$breakpoint}-bottom {
+        align-items: flex-end;
+      }
+
+      .col--align-#{$breakpoint}-top {
+        align-self: flex-start;
+      }
+
+      .col--align-#{$breakpoint}-center {
+        align-self: center;
+      }
+
+      .col--align-#{$breakpoint}-bottom {
+        align-self: flex-end;
+      }
+
+      .col--order-#{$breakpoint}-first {
+        order: -1;
+      }
+
+      .col--#{$breakpoint}-reset {
+        order: 0;
+      }
+
+      .col--#{$breakpoint}-last {
+        order: 1;
+      }
+
+      .row--#{$breakpoint}-reverse {
+        flex-direction: row-reverse;
+      }
+
+      .col--#{$breakpoint}-flex {
+        display: flex;
+      }
+
+      @for $i from 1 through $grid-column-count {
+        .col--#{$breakpoint}-#{$i} {
+          width: ($i / $grid-column-count) * 100%;
+        }
+      }
+
+      @for $i from 0 through ($grid-column-count - 1) {
+        .col--#{$breakpoint}-offset-#{$i} {
+          margin-left: ($i / $grid-column-count) * 100%;
+        }
+      }
+    }
+  }
+}
