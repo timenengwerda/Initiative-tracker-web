@@ -8,7 +8,7 @@
     </div>
     <div class="row">
       <div class="col">
-        <draggable :element="'ul'" :options="{draggable: '.draggable'}" class="sortable initiative__list" ref="">
+        <draggable :element="'ul'" :options="{animation: 100}" class="sortable initiative__list" ref="">
           <template v-for="(order, orderIndex) in attackOrder">
             <player-list
               @deleted="resetInitiative"
@@ -17,6 +17,7 @@
               v-if="order.type === 'player'"
               class="draggable" />
             <li class="initiative__list__item enemy draggable" v-if="order.type === 'group'">
+              <i class="fa fa-arrows-alt enemy__dragger  dragger"></i>
               <ul class="initiative__list" style="flex: 1;">
                   <enemy-list
                   :key="index"
@@ -139,7 +140,7 @@
 @import './Initiative';
 .sortable-ghost {
   overflow: hidden;
-  height: 35px;
+  height: 45px;
   background: rgba($black, .3);
 }
 

@@ -1,6 +1,6 @@
 <template>
   <li class="initiative__list__player initiative__list__item player" :class="{'active': player.active}" @click.prevent="setActive()">
-    <i class="fa fa-arrows-alt player__dragger"></i>
+    <i class="fa fa-arrows-alt player__dragger dragger"></i>
     <span class="player__title">{{ player.name }}</span>
     <a href="#" @click.prevent="removePlayer()">
       <i class="fas fa-trash"></i>
