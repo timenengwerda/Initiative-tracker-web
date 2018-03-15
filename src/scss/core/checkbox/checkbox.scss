@@ -1,34 +1,35 @@
 [type="checkbox"]:not(:checked),
 [type="checkbox"]:checked {
     position: absolute;
-    left: rem(-9999px);
+    // left: rem(-9999px);
     opacity: 0;
 }
 
 [type="checkbox"] + label {
     position: relative;
-    cursor: pointer;
     display: inline-block;
-    font-size: 1rem;
-    user-select: none;
     padding-left: rem(30px);
     height: rem(25px);
-    line-height: rem(21px);
     font-weight: normal;
+    font-size: 1rem;
+    line-height: rem(21px);
+    cursor: pointer;
+
+    user-select: none;
 }
 
 [type="checkbox"] + label:before,
 [type="checkbox"] + label:after {
-    content: '';
     position: absolute;
     top: 0;
     left: 0;
+    z-index: 0;
+    margin-top: rem(2px);
     width: rem(18px);
     height: rem(18px);
-    z-index: 0;
     border: 1px solid $gray-lighter;
     border-radius: rem(1px);
-    margin-top: rem(2px);
+    content: '';
     transition: .2s;
 }
 
@@ -43,11 +44,11 @@
 }
 
 [type="checkbox"].tabbed:focus + label:after {
-    transform: scale(1);
     border: 0;
     border-radius: 50%;
-    box-shadow: 0 0 0 10px rgba($black, .1);
     background-color: rgba($black, .1);
+    box-shadow: 0 0 0 10px rgba($black, .1);
+    transform: scale(1);
 }
 
 [type="checkbox"]:checked + label:before {
@@ -56,12 +57,13 @@
     width: rem(9px);
     height: rem(17px);
     border-top: 2px solid transparent;
-    border-left: 2px solid transparent;
     border-right: 2px solid $form-toggle-color;
     border-bottom: 2px solid $form-toggle-color;
+    border-left: 2px solid transparent;
     transform: rotate(40deg);
-    backface-visibility: hidden;
     transform-origin: 100% 100%;
+
+    backface-visibility: hidden;
 }
 
 [type="checkbox"]:checked:disabled + label:before {
@@ -76,12 +78,13 @@
     width: rem(10px);
     height: rem(22px);
     border-top: none;
-    border-left: none;
     border-right: 2px solid $form-toggle-color;
     border-bottom: none;
+    border-left: none;
     transform: rotate(90deg);
-    backface-visibility: hidden;
     transform-origin: 100% 100%;
+
+    backface-visibility: hidden;
 }
 
 [type="checkbox"]:indeterminate:disabled + label:before {

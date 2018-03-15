@@ -8,16 +8,16 @@
     </div>
     <div class="row">
       <div class="col">
-        <ul class="sortable initiative__list" ref="sortableOrder">
+        <draggable :element="'ul'" :options="{draggable: '.draggable'}" class="sortable initiative__list" ref="">
           <template v-for="(order, orderIndex) in attackOrder">
             <player-list
               @deleted="resetInitiative"
               :key="orderIndex"
               :indexOfPlayer="orderIndex"
-              v-if="order.type === 'player' " />
-            <li class="initiative__list__item enemy" v-if="order.type === 'group'">
-              <i class="fa fa-arrows-alt enemy__dragger"></i>
-              <ul class="initiative__list">
+              v-if="order.type === 'player'"
+              class="draggable" />
+            <li class="initiative__list__item enemy draggable" v-if="order.type === 'group'">
+              <ul class="initiative__list" style="flex: 1;">
                   <enemy-list
                   :key="index"
                   :indexOfGroup="orderIndex"
@@ -28,7 +28,7 @@
               </ul>
             </li>
           </template>
-        </ul>
+        </draggable>
       </div>
     </div>
     <div class="row mb-5">
@@ -70,13 +70,15 @@
   import PlayerList from '@/components/Player/List'
   import jQuery from 'jquery'
   import sortable from 'jquery-ui-sortable-npm'
+  import draggable from 'vuedraggable'
 
   export default {
     name: 'initiative',
     components: {
       EnemyList,
       PlayerList,
-      EnemyForm
+      EnemyForm,
+      draggable
     },
     data () {
       return {
@@ -93,7 +95,7 @@
     },
     mounted () {
       this.resetInitiative()
-      this.addSortables()
+      // this.addSortables()
     },
     methods: {
       openPlayerForm () {
@@ -135,4 +137,18 @@
 
 <style lang="scss">
 @import './Initiative';
+.sortable-ghost {
+  overflow: hidden;
+  height: 35px;
+  background: rgba($black, .3);
+}
+
+.sortable-drag {
+  overflow: hidden;
+  max-height: 125px;
+  background: $white;
+  opacity: .99;
+  // beats the shit out of me:
+  // But when I put the opacity on 1 the enemy item shows too much of the rest of the dom
+}
 </style>
