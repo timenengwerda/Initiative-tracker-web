@@ -1,23 +1,29 @@
 .enemy-list {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  flex-direction: column;
 
-  &__info {
-    flex: 1;
-    font-size: 18px;
+  &__info,
+  &__damage {
+    width: 100%;
   }
 
   &__damage-form {
     margin: 0;
-    max-width: 75px;
+    padding-bottom: .5rem;
+    max-width: 160px;
+    width: 50%;
     background: none;
 
     &__health {
       margin: 0 0 0 1rem;
       padding: 0.5rem;
+      width: 50%;
       border-radius: 3px;
       background-color: $brand-success;
       color: $white;
+      text-align: center;
+      line-height: 1.8;
     }
   }
 
@@ -37,11 +43,24 @@
       }
     }
   }
+
+  &__damage {
+    display: flex;
+    align-items: flex-start;
+  }
 }
+
 .enemy {
   &__dragger {
     margin-top: 1rem;
     margin-right: 1rem;
     color: $gray-lighter;
+  }
+}
+
+@include media-breakpoint-up(md) {
+  .enemy-list {
+    align-items: flex-end;
+    flex-direction: row;
   }
 }

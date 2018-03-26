@@ -12,7 +12,10 @@
         justify-content: space-between;
         padding: 1rem;
         border-bottom: 1px solid $gray-lighter;
-        cursor: move;
+
+        .dragger {
+          cursor: move;
+        }
     }
 
     & > div.sortable-ghost {

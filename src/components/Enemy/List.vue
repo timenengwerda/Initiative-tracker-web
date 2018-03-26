@@ -19,15 +19,14 @@
           </div>
         </div>
       </div>
-      <form @submit.prevent="updateHealth" class="enemy-list__damage-form">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="DMG" v-model="decreaseHealthBy" autofocus>
-        </div>
-      </form>
-      <div class="enemy-list__damage-form__health">{{ enemy.health }} / {{ enemy.maxHealth }}</div>
-      <!--<a href="#" class="btn btn-link" @click.prevent="removeEnemy()">
-        <i class="fas fa-trash"></i>
-      </a>-->
+      <div class="enemy-list__damage">
+        <form @submit.prevent="updateHealth" class="enemy-list__damage-form">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="DMG" v-model="decreaseHealthBy" autofocus>
+          </div>
+        </form>
+        <div class="enemy-list__damage-form__health">{{ enemy.health }} / {{ enemy.maxHealth }}</div>
+      </div>
     </div>
   </li>
 </template>
