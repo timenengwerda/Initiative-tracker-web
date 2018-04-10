@@ -1,0 +1,45 @@
+.tabs {
+  display: flex;
+  flex-direction: column;
+
+  &__item {
+    transition: all .2s ease-in-out;
+    display: flex;
+    width: 100%;
+    padding: 1.2rem 1rem;
+    border-bottom: 1px solid $gray-lighter;
+    color: $gray-light;
+    cursor: pointer;
+
+    &__title {
+      flex: 1;
+    }
+
+    &__options {
+      transition: all .2s ease-in-out;
+      opacity: 0;
+    }
+  }
+
+  &__item:not(.tabs__item--static):hover .tabs__item__options {
+    opacity: 1;
+  }
+
+  &__item:not(.tabs__item--static):hover,
+  &__item--active {
+    text-decoration: none;
+    color: $white;
+    background-color: $gray-lighter;
+  }
+
+  &__item--static {
+    display: block;
+  }
+
+  &__footer {
+    padding: 1.2rem 1rem;
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+  }
+}

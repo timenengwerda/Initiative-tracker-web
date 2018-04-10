@@ -2,6 +2,9 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from './store'
+import VueSwal from 'vue-sweetalert2'
+
+Vue.use(VueSwal)
 
 Vue.config.productionTip = false
 

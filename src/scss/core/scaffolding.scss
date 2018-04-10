@@ -77,3 +77,9 @@ hr {
 .animation--fadeInOut {
   animation: fadeInOut 1.5s linear infinite;
 }
+
+@include media-breakpoint-down(md) {
+  .hidden--md-down {
+    display: none !important;
+  }
+}

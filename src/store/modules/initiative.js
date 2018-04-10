@@ -1,5 +1,7 @@
+import storage from '../storage'
+
 const state = {
-  defaultPlayerList: (localStorage.getItem('default-player-list')) ? JSON.parse(localStorage.getItem('default-player-list')) : [],
+  defaultPlayerList: (storage.get('default-player-list')) ? JSON.parse(storage.get('default-player-list')) : [],
   attackOrder: []
 }
 
@@ -42,7 +44,7 @@ const mutations = {
   },
   ADD_PLAYER(state, dto) {
     state.defaultPlayerList.push(dto)
-    localStorage.setItem('default-player-list', JSON.stringify(state.defaultPlayerList))
+    storage.set('default-player-list', JSON.stringify(state.defaultPlayerList))
   },
   REMOVE_FROM_ATTACK_ORDER(state, dto) {
     state.attackOrder.splice(dto, 1)
@@ -104,7 +106,7 @@ const mutations = {
         itemToSave = JSON.stringify(state.defaultPlayerList)
       }
 
-      localStorage.setItem('default-player-list', itemToSave)
+      storage.set('default-player-list', itemToSave)
     }
   },
   REMOVE_ENEMY_FROM_LIST(state, dto) {
