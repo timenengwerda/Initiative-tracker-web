@@ -7,7 +7,7 @@
     display: flex;
     width: 100%;
     padding: 1.2rem 1rem;
-    border-bottom: 1px solid $gray-lighter;
+    border-bottom: 1px solid $gray-lightest;
     color: $gray-light;
     cursor: pointer;
 
@@ -36,10 +36,17 @@
     display: block;
   }
 
+  &__content {
+    flex: 1;
+    overflow-y: auto;
+  }
+
   &__footer {
+    border-top: 1px solid $gray-lighter;
     padding: 1.2rem 1rem;
     margin-top: auto;
     display: flex;
     justify-content: space-between;
+    position: relative;
   }
 }

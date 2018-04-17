@@ -2,31 +2,44 @@
   <div class="notes">
     <div class="notes__tabs tabs">
       <div class="tabs__header search">
-        <input type="text" v-model="searchTerm" class="search__input form-control" placeholder="Search for title...">
+        <input type="text" v-model="searchTerm" class="search__input form-control" placeholder="Search">
         <a href="" class="search__close" @click.prevent="searchTerm = ''" v-if="searchTerm != ''"><i class="fas fa-times"></i></a>
       </div>
-      <div
-        @click.prevent="activeTab = index"
-        class="tabs__item"
-        :class="{'tabs__item--active': activeTab === index}"
-        v-for="(note, index) in filteredNotes"
-        v-if="notes.length > 0">
-          <span class="tabs__item__title">{{ note.title }}</span>
-          <a href="#" @click.prevent="removeNote($event, index)" class="btn btn-link tabs__item__options">
-            <i class="fas fa-trash"></i>
-          </a>
+      <div class="tabs__content">
+        <div
+          @click.prevent="activeTab = index"
+          class="tabs__item"
+          :class="{'tabs__item--active': activeTab === index}"
+          v-for="(note, index) in filteredNotes"
+          v-if="notes.length > 0">
+            <span class="tabs__item__title">{{ note.title }}</span>
+            <a href="#" @click.prevent="removeNote($event, index)" class="btn btn-link tabs__item__options">
+              <i class="fas fa-trash"></i>
+            </a>
+        </div>
+        <div class="tabs__item tabs__item--static" v-if="notes.length === 0">No notes found.<br><a href="" @click.prevent="newTab">Create one now</a></div>
       </div>
 
-      <div class="tabs__item tabs__item--static" v-if="notes.length === 0">No notes found.<br><a href="" @click.prevent="newTab">Create one now</a></div>
 
       <div class="tabs__footer">
         <a href="#" @click.prevent="newTab">
           <i class="fas fa-plus"></i>
-          New tab
+          New Note
         </a>
-        <a href="#" @click.prevent="stopUsingNotes">
-          Close notes
+        <a href="" @click.prevent="showOptions = !showOptions">
+          Options
         </a>
+        <div class="options" v-if="showOptions">
+          <a href="#" @click.prevent="importNotes">
+            Import notes
+          </a>
+          <a href="#" @click.prevent="exportNotes">
+            Export notes
+          </a>
+          <a href="#" @click.prevent="clearNotes">
+            Wipe all notes
+          </a>
+        </div>
       </div>
     </div>
     <note
@@ -35,10 +48,28 @@
       v-if="activeTab >= 0 && notes.length > 0 && activeTab === index"
       v-for="(note, index) in notes" />
     <div v-if="notes.length === 0 || activeTab === -1" class="notes__content">
-      <h1>Beware!</h1>
-      <p>
-        The <strong>notes</strong> and <strong>players</strong> are being saved in you own web storage. If you decide to empty your browser history and/or cookies all this content will be <strong>LOST</strong>.
-      </p>
+      <template v-if="showNotesImport">
+        <h1>Import notes</h1>
+        <form @submit.prevent="extractJson">
+          <div class="form-group">
+            <label>Json file:</label>
+            <input type="file" class="form-control" accept="application/json" @change.prevent="setImportFile" />
+          </div>
+          <div class="form-group">
+            <input type="checkbox" v-model="wipeOnImport" value="1" id="wipe">
+            <label for="wipe">Wipe existing notes</label>
+          </div>
+          <div class="form-group">
+            <button type="submit" class="button button--primary">Import</button>
+          </div>
+        </form>
+      </template>
+      <template v-else>
+        <h1>Beware!</h1>
+        <p>
+          The <strong>notes</strong> and <strong>players</strong> are being saved in you own web storage. If you decide to empty your browser history and/or cookies all this content will be <strong>LOST</strong>.
+        </p>
+      </template>
     </div>
   </div>
 </template>
@@ -54,7 +85,11 @@
     data () {
       return {
         activeTab: -1,
-        searchTerm: ''
+        searchTerm: '',
+        showOptions: false,
+        showNotesImport: false,
+        importFile: false,
+        wipeOnImport: false
       }
     },
     computed: {
@@ -64,7 +99,7 @@
         }
 
         return this.notes.filter(note => {
-          return note.title.toLowerCase().includes(this.searchTerm.toLowerCase())
+          return note.title.toLowerCase().includes(this.searchTerm.toLowerCase()) || note.content.toLowerCase().includes(this.searchTerm.toLowerCase())
         })
       },
       ...mapGetters([
@@ -72,9 +107,6 @@
       ])
     },
     methods: {
-      stopUsingNotes () {
-        this.$store.commit('TOGGLE_NOTES', false)
-      },
       newTab () {
         this.$store.commit('ADD_BLANK_NOTE')
         this.activeTab = this.notes.length - 1 // make the new tab active
@@ -99,33 +131,92 @@
           }
         })
       },
+      setImportFile (event) {
+        this.importFile = event.target.files[0]
+      },
+      extractJson (event) {
+        if (this.importFile) {
+          if (this.wipeOnImport) {
+            this.$store.commit('SET_NOTES', [])
+          }
+
+          const reader = new FileReader()
+          reader.onload = (event) => {
+            const result = JSON.parse(event.target.result)
+            if (result.length) {
+              result.forEach(note => {
+                if (note.title !== undefined && note.saveStatus !== undefined && note.content !== undefined) {
+                  console.log(note)
+                  this.$store.commit('ADD_NOTE', note)
+                  this.$store.commit('UPDATE_NOTES_IN_STORAGE')
+                }
+              })
+            }
+          }
+
+          reader.readAsText(this.importFile)
+        } else {
+          this.$swal({
+            title: 'No file was selected',
+            type: 'warning'
+          })
+        }
+      },
+      importNotes () {
+        this.activeTab = -1;
+        this.showNotesImport = true
+        this.showOptions = false
+        this.importFile = false
+        this.wipeOnImport = false
+      },
       exportNotes() {
         // Ewout gave me this of which i'm forever grateful
-        const data = JSON.stringify(this.checkRequests)
+        const data = JSON.stringify(this.notes)
         const blob = new Blob([data], { type: 'text/plain' })
         const e = document.createEvent('MouseEvents'),
           a = document.createElement('a')
-        a.download = 'export.json'
-        a.href = window.URL.createObjectURL(blob)
-        a.dataset.downloadurl = ['text/json', a.download, a.href].join(':')
-        e.initEvent(
-          'click',
-          true,
-          false,
-          window,
-          0,
-          0,
-          0,
-          0,
-          0,
-          false,
-          false,
-          false,
-          false,
-          0,
-          null
-        )
-        a.dispatchEvent(e)
+          a.download = 'export.json'
+          a.href = window.URL.createObjectURL(blob)
+          a.dataset.downloadurl = ['text/json', a.download, a.href].join(':')
+          e.initEvent(
+            'click',
+            true,
+            false,
+            window,
+            0,
+            0,
+            0,
+            0,
+            0,
+            false,
+            false,
+            false,
+            false,
+            0,
+            null
+          )
+          a.dispatchEvent(e)
+
+          this.showOptions = false
+      },
+      clearNotes () {
+        this.showOptions = false
+
+        this.$swal({
+          title: 'Are you sure?',
+          text: 'This will remove all notes from storage and cannot be undone',
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Yes Delete it!',
+          cancelButtonText: 'No, Keep it!',
+          showCloseButton: true,
+          showLoaderOnConfirm: true
+        }).then((result) => {
+          if(result.value) {
+            this.$store.commit('SET_NOTES', [])
+            this.$swal('Deleted', 'The notes have been deleted', 'success')
+          }
+        })
       }
     }
   }
@@ -148,5 +239,17 @@
     top: 13px;
     right: 13px;
   }
+}
+
+.options {
+  position: absolute;
+  bottom: 40px;
+  right: 0;
+  background: $white;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  border-radius: 5px;
+  border: 1px solid $gray-lighter;
 }
 </style>

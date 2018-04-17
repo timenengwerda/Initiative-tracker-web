@@ -6,7 +6,7 @@
         <initiative/>
         <dice-roller/>
         <div class="text--center hidden--md-down">
-          <a href="#" v-if="!showNotes" @click.prevent="startUsingNotes">Use notes</a>
+          <a href="#" @click.prevent="startUsingNotes">Toggle notes</a>
         </div>
       </div>
       <div class="col--md-7 col--md-offset-1" v-if="showNotes">
@@ -39,7 +39,7 @@
     },
     methods: {
       startUsingNotes () {
-        this.$store.commit('TOGGLE_NOTES', true)
+        this.$store.commit('TOGGLE_NOTES', !this.showNotes)
       }
     }
   }

@@ -8,6 +8,8 @@
         placeholder="Start making a note..."
         v-model="content"
         :editorToolbar="customToolbar"
+        :customModules="quillModules"
+        :editorOptions="quillEditorSettings"
         class="notes__content__editor" />
     </div>
     <div class="form-group button-group">
@@ -18,8 +20,11 @@
 </template>
 
 <script>
-  import { VueEditor } from 'vue2-editor'
+  import { VueEditor, Quill } from 'vue2-editor'
+  import AutoLinks from 'quill-auto-links';
   import moment from 'moment'
+  import linkifyHtml from 'linkifyjs/html'
+
   export default {
     name: 'Note',
     props: ['index'],
@@ -28,14 +33,29 @@
     },
     data () {
       return {
+        saveInterval: null,
         saveFrequency: 10000, // time in ms how often the content should be saved to the localstorage
         customToolbar: [
           ['bold', 'italic', 'underline'],
-          [{ 'list': 'ordered'}, { 'list': 'bullet' }]
+          [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+          ['link']
         ]
       }
     },
     computed: {
+      quillModules () {
+        return [{
+          alias: 'autoLinks',
+          module: AutoLinks
+        }]
+      },
+      quillEditorSettings () {
+        return {
+          modules: {
+            autoLinks: true
+          }
+        }
+      },
       saveDate () {
         if (this.note.saveStatus) {
           const date = moment(this.note.saveStatus)
@@ -49,7 +69,7 @@
           return this.$store.getters.notes[this.index].content
         },
         set (value) {
-          this.$store.commit('UPDATE_NOTE_CONTENT', {noteIndex: this.index, value})
+          this.$store.commit('UPDATE_NOTE_CONTENT', {noteIndex: this.index, value: value})
         }
       },
       title: {
@@ -65,10 +85,14 @@
       }
     },
     mounted() {
-      setInterval(() => {
+      this.saveInterval = setInterval(() => {
         this.saveNote()
       }, this.saveFrequency)
       this.$nextTick(() => this.$refs.title.focus())
+    },
+    beforeDestroy () {
+      // clear the interval if this component is destroyed. It prevents console errors for trying to do saveNote() after this component is removed
+      clearInterval(this.saveInterval)
     },
     methods: {
       saveNote () {

@@ -13,7 +13,7 @@ const actions = {
 const mutations = {
   ADD_BLANK_NOTE(context, dto) {
     state.notes.push({
-      title: `New tab ${state.notes.length + 1}`,
+      title: `New note ${state.notes.length + 1}`,
       saveStatus: false,
       content: ''
     })
@@ -35,6 +35,12 @@ const mutations = {
   },
   TOGGLE_NOTES(context, dto) {
     state.showNotes = dto
+  },
+  ADD_NOTE(context, dto) {
+    state.notes.push(dto)
+  },
+  SET_NOTES(context, dto) {
+    state.notes = dto
   }
 }
 
