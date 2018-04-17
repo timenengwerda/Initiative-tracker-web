@@ -170,34 +170,42 @@
         this.wipeOnImport = false
       },
       exportNotes() {
-        // Ewout gave me this of which i'm forever grateful
-        const data = JSON.stringify(this.notes)
-        const blob = new Blob([data], { type: 'text/plain' })
-        const e = document.createEvent('MouseEvents'),
-          a = document.createElement('a')
-          a.download = 'export.json'
-          a.href = window.URL.createObjectURL(blob)
-          a.dataset.downloadurl = ['text/json', a.download, a.href].join(':')
-          e.initEvent(
-            'click',
-            true,
-            false,
-            window,
-            0,
-            0,
-            0,
-            0,
-            0,
-            false,
-            false,
-            false,
-            false,
-            0,
-            null
-          )
-          a.dispatchEvent(e)
+        this.$swal({
+          title: 'Name your export file',
+          input: 'text'
+        }).then(val => {
+          let exportName = (val && val.value) ? val.value : 'initiative-tracker-export'
+          exportName = exportName.toLowerCase().replace(/[^a-zA-Z0-9]+/g, "-");
 
-          this.showOptions = false
+          // Ewout gave me this of which i'm forever grateful
+          const data = JSON.stringify(this.notes)
+          const blob = new Blob([data], { type: 'text/plain' })
+          const e = document.createEvent('MouseEvents'),
+            a = document.createElement('a')
+            a.download = `${exportName}.json`
+            a.href = window.URL.createObjectURL(blob)
+            a.dataset.downloadurl = ['text/json', a.download, a.href].join(':')
+            e.initEvent(
+              'click',
+              true,
+              false,
+              window,
+              0,
+              0,
+              0,
+              0,
+              0,
+              false,
+              false,
+              false,
+              false,
+              0,
+              null
+            )
+            a.dispatchEvent(e)
+
+            this.showOptions = false
+        })
       },
       clearNotes () {
         this.showOptions = false
