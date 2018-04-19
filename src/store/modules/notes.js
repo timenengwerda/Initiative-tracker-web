@@ -1,4 +1,5 @@
 import storage from '../storage'
+import { uuidv4 } from '../../Utils'
 
 const state = {
   notes: (storage.get('notes')) ? JSON.parse(storage.get('notes')) : [],
@@ -15,23 +16,24 @@ const mutations = {
     state.notes.push({
       title: `New note ${state.notes.length + 1}`,
       saveStatus: false,
-      content: ''
+      content: '',
+      id: uuidv4()
     })
   },
   REMOVE_NOTE(context, dto) {
     state.notes.splice(dto, 1)
   },
   UPDATE_NOTE_CONTENT(context, dto) {
-    state.notes[dto.noteIndex].content = dto.value
+    state.notes.find(note => note.id === dto.noteId).content = dto.value
   },
   UPDATE_NOTE_TITLE(context, dto) {
-    state.notes[dto.noteIndex].title = dto.value
+    state.notes.find(note => note.id === dto.noteId).title = dto.value
   },
   UPDATE_NOTES_IN_STORAGE(context) {
     storage.set('notes', JSON.stringify(state.notes))
   },
   UPDATE_SAVE_STATUS(context, dto) {
-    state.notes[dto.noteIndex].saveStatus = dto.timestamp
+    state.notes.find(note => note.id === dto.noteId).saveStatus = dto.timestamp
   },
   TOGGLE_NOTES(context, dto) {
     state.showNotes = dto
@@ -46,7 +48,10 @@ const mutations = {
 
 const getters = {
   notes: state => state.notes,
-  showNotes: state => state.showNotes
+  showNotes: state => state.showNotes,
+  getNoteById: (state) => (id) => {
+    return state.notes.find(note => note.id === id)
+  }
 }
 
 export default {

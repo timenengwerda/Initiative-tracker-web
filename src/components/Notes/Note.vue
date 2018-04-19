@@ -27,7 +27,7 @@
 
   export default {
     name: 'Note',
-    props: ['index'],
+    props: ['id'],
     components: {
       VueEditor
     },
@@ -66,22 +66,22 @@
       },
       content: {
         get () {
-          return this.$store.getters.notes[this.index].content
+          return this.$store.getters.getNoteById(this.id).content
         },
         set (value) {
-          this.$store.commit('UPDATE_NOTE_CONTENT', {noteIndex: this.index, value: value})
+          this.$store.commit('UPDATE_NOTE_CONTENT', {noteId: this.id, value: value})
         }
       },
       title: {
         get () {
-          return this.$store.getters.notes[this.index].title
+          return this.$store.getters.getNoteById(this.id).title
         },
         set (value) {
-          this.$store.commit('UPDATE_NOTE_TITLE', {noteIndex: this.index, value})
+          this.$store.commit('UPDATE_NOTE_TITLE', {noteId: this.id, value})
         }
       },
       note () {
-        return this.$store.getters.notes[this.index]
+        return this.$store.getters.getNoteById(this.id)
       }
     },
     mounted() {
@@ -97,7 +97,7 @@
     methods: {
       saveNote () {
         this.$store.commit('UPDATE_NOTES_IN_STORAGE')
-        this.$store.commit('UPDATE_SAVE_STATUS', {noteIndex: this.index, timestamp: Date.now()})
+        this.$store.commit('UPDATE_SAVE_STATUS', {noteId: this.id, timestamp: Date.now()})
       }
     }
   }

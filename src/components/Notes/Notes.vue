@@ -7,9 +7,9 @@
       </div>
       <div class="tabs__content">
         <div
-          @click.prevent="activeTab = index"
+          @click.prevent="activeTab = note.id"
           class="tabs__item"
-          :class="{'tabs__item--active': activeTab === index}"
+          :class="{'tabs__item--active': activeTab === note.id}"
           v-for="(note, index) in filteredNotes"
           v-if="notes.length > 0">
             <span class="tabs__item__title">{{ note.title }}</span>
@@ -42,10 +42,11 @@
         </div>
       </div>
     </div>
+
     <note
-      :index="index"
+      :id="note.id"
       :key="index"
-      v-if="activeTab >= 0 && notes.length > 0 && activeTab === index"
+      v-if="activeTab !== -1 && notes.length > 0 && activeTab === note.id"
       v-for="(note, index) in notes" />
     <div v-if="notes.length === 0 || activeTab === -1" class="notes__content">
       <template v-if="showNotesImport">
@@ -77,6 +78,8 @@
 <script>
   import Note from './Note'
   import { mapGetters } from 'vuex'
+  import { uuidv4 } from '../../Utils'
+
   export default {
     name: 'Notes',
     components: {
@@ -147,6 +150,9 @@
               result.forEach(note => {
                 if (note.title !== undefined && note.saveStatus !== undefined && note.content !== undefined) {
                   console.log(note)
+                  if (!note.id) {
+                    note.id = uuidv4()
+                  }
                   this.$store.commit('ADD_NOTE', note)
                   this.$store.commit('UPDATE_NOTES_IN_STORAGE')
                 }
