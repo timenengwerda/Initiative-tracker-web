@@ -1,6 +1,6 @@
 <template>
 
-  <div class="grid--fluid tracker-wrapper">
+  <div class="grid grid--fluid tracker-wrapper">
     <div class="row">
       <div :class="wrapperClass">
         <initiative/>
@@ -9,7 +9,7 @@
           <a href="#" @click.prevent="startUsingNotes">Toggle notes</a>
         </div>
       </div>
-      <div class="col--md-7 col--md-offset-1" v-if="showNotes">
+      <div class="col--md-7" v-if="showNotes">
         <notes />
       </div>
     </div>
@@ -34,7 +34,7 @@
         'showNotes'
       ]),
       wrapperClass () {
-        return (this.showNotes) ? 'col--md-3 col--md-offset-1' : 'col--md-4 col--md-offset-4'
+        return (this.showNotes) ? 'col--md-5 scroller' : 'col--md-4 col--md-offset-4'
       }
     },
     methods: {
@@ -46,9 +46,11 @@
 </script>
 <style lang="scss">
 .tracker-wrapper {
+  padding-bottom: 100px;
+
   > .row {
-    height: 100vh;
     margin-bottom: 0;
+    height: 100vh;
   }
 }
 

@@ -112,7 +112,7 @@
     methods: {
       newTab () {
         this.$store.commit('ADD_BLANK_NOTE')
-        this.activeTab = this.notes.length - 1 // make the new tab active
+        this.activeTab = this.notes[this.notes.length - 1].id // make the new tab active
       },
       removeNote(e, index) {
         e.stopPropagation() // dont make the item active

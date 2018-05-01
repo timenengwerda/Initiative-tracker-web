@@ -69,6 +69,11 @@ hr {
   }
 }
 
+.scroller {
+  overflow-y: auto;
+  padding-bottom: 100px !important;
+}
+
 .sweet-alert p {
   //sasslint disable-next-line no-important
   margin-bottom: 1rem !important;
