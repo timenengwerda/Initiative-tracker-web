@@ -25,3 +25,34 @@
         }
     }
 }
+
+.initiative-ordering-modal {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  max-width: 300px;
+  margin-bottom: 2rem;
+
+  &__item {
+    padding: 7px 12px;
+    border-bottom: 1px solid $gray-lightest;
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+
+    &__title {
+      flex: 1;
+    }
+
+    &__form-control {
+      max-width: 75px;
+      text-align: center;
+    }
+
+    &__roll-button {
+      display: block;
+      width: 50px;
+      text-align: center;
+    }
+  }
+}

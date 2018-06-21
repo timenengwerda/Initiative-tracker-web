@@ -19,7 +19,7 @@ const actions = {
     context.commit('SET_ENEMY_HEALTH', dto)
   },
   addPlayer(context, dto) {
-    context.commit('ADD_PLAYER', { name: dto, type: 'player' })
+    context.commit('ADD_PLAYER', { name: dto, type: 'player', initiative: 0 })
   },
   setActiveInAttackOrder(context, dto) {
     context.commit('SET_ACTIVE_IN_ATTACK_ORDER', dto)
@@ -119,8 +119,14 @@ const mutations = {
   }
 }
 
+import _ from 'lodash'
+
 const getters = {
-  attackOrder: state => state.attackOrder,
+  attackOrder: (state) => {
+    // return state.attackOrder
+    // console.log(_.orderBy(state.attackOrder, ['initiative']))
+    return _.orderBy(state.attackOrder, ['initiative'], ['desc'])
+  },
   players: state => state.defaultPlayerList,
 }
 

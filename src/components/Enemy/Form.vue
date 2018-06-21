@@ -53,7 +53,8 @@
         if (this.newEnemyHealth > 0 && this.newEnemy !== '' && this.amountOfEnemies > 0) {
           let enemyGroup = {
             type: 'group',
-            players: []
+            players: [],
+            initiative: 0
           }
 
           for (let i = 0; i < this.amountOfEnemies; i++) {

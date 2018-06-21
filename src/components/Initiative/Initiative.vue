@@ -3,7 +3,25 @@
     <div class="row">
       <div class="col initiative__title-col">
         <h1><i class="fab fa-d-and-d"></i> Initiative tracker</h1>
-        <a href="#" class="button button--link" style="margin-left: auto;" @click.prevent="resetInitiative">Reset initiative</a>
+        <a href="#" class="button button--link" style="margin-left: auto;" @click.prevent="showOrderingList">Set Initiative order</a>
+
+        <modal name="initiative-ordering-modal" height="auto" :scrollable="true">
+          <form @submit.prevent="setInitiativeOrder">
+              <h2>Set the initiative for each PC and Enemy</h2>
+              <ul class="initiative-ordering-modal">
+                <li v-for="item in initiativeOrderingList" class="initiative-ordering-modal__item">
+                  <span class="initiative-ordering-modal__item__title" v-if="item.type === 'player'">{{item.name}}</span>
+                  <span class="initiative-ordering-modal__item__title" v-else>{{item.players[0].name.replace('#1', '')}}</span>
+
+                  <input type="number" placeholder="#" v-model="item.initiative" class="form-control initiative-ordering-modal__item__form-control">
+                  <a class="initiative-ordering-modal__item__roll-button" href="#" v-if="item.type !== 'player'" @click.prevent="rollForInitiative(item)">roll</a>
+                  <span class="initiative-ordering-modal__item__roll-button" v-else>&nbsp;</span>
+                </li>
+              </ul>
+              <button type="submit" @click.prevent="setInitiativeOrder" class="button button--primary">Set order</button>
+              <a href="#" @click.prevent="hideOrderingList" class="button button--link">Cancel</a>
+            </form>
+        </modal>
       </div>
     </div>
     <div class="row">
@@ -74,6 +92,7 @@
   import jQuery from 'jquery'
   import sortable from 'jquery-ui-sortable-npm'
   import draggable from 'vuedraggable'
+  import _ from 'lodash'
 
   export default {
     name: 'initiative',
@@ -88,6 +107,13 @@
         enemyFormOpen: false,
         addNewPlayerFormOpen: false,
         newPlayerName: '',
+        initiativeOrderingList: [] // a clone of attackorder but with the purpose of setting initiative and ordering the actual attackOrder
+      }
+    },
+    watch: {
+      'attackOrder': function (a) {
+        // every time the attack order changes. Update the initiativeOrderingList
+        this.initiativeOrderingList = _.cloneDeep(a)
       }
     },
     computed: {
@@ -101,6 +127,17 @@
       // this.addSortables()
     },
     methods: {
+      rollForInitiative (item) {
+        const initiative = Math.floor(Math.random() * (20 - 1 + 1)) + 1;
+        item.initiative = initiative
+      },
+      showOrderingList () {
+        // this.resetInitiative()
+        this.$modal.show('initiative-ordering-modal')
+      },
+      hideOrderingList () {
+        this.$modal.hide('initiative-ordering-modal')
+      },
       openPlayerForm () {
         this.addNewPlayerFormOpen = true
         this.$nextTick(() => this.$refs.newPlayerName.focus())
@@ -108,8 +145,20 @@
       resetInitiative () {
         this.resetAttackOrder()
         this.players.forEach(player => {
-          this.addToAttackOrder({name: player.name, type: 'player', active: false})
+          this.addToAttackOrder({name: player.name, type: 'player', active: false, initiative: 0})
         })
+      },
+      setInitiativeOrder () {
+        this.resetAttackOrder()
+        this.initiativeOrderingList.forEach(player => {
+          if (player.type === 'player') {
+            this.addToAttackOrder({name: player.name, type: player.type, active: player.active, initiative: parseInt(player.initiative)})
+          } else {
+            this.addToAttackOrder({name: player.name, players: player.players, type: player.type, active: player.active, initiative: parseInt(player.initiative)})
+          }
+        })
+
+        this.hideOrderingList()
       },
       addSortables () {
         jQuery( this.$refs.sortableOrder ).sortable({
@@ -153,5 +202,13 @@
   opacity: .99;
   // beats the shit out of me:
   // But when I put the opacity on 1 the enemy item shows too much of the rest of the dom
+}
+
+.v--modal-box {
+  padding: 20px;
+}
+.modal-content {
+  height: 100%;
+  overflow: auto;
 }
 </style>
