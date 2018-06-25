@@ -26,7 +26,8 @@
     </div>
     <div class="row">
       <div class="col">
-        <draggable :element="'ul'" :options="{animation: 100, handle: '.dragger'}" class="sortable initiative__list" ref="">
+        <!--<draggable :element="'ul'" :options="{animation: 100, handle: '.dragger'}" class="sortable initiative__list" ref="">-->
+        <ul class="sortable initiative__list">
           <template v-for="(order, orderIndex) in attackOrder">
             <player-list
               @deleted="resetInitiative"
@@ -35,9 +36,6 @@
               v-if="order.type === 'player'"
               class="draggable" />
             <li class="initiative__list__item enemy draggable" v-if="order.type === 'group'">
-              <div class="dragger">
-                <i class="fa fa-arrows-alt enemy__dragger"></i>
-              </div>
               <ul class="initiative__list" style="flex: 1;">
                   <enemy-list
                   :key="index"
@@ -49,7 +47,8 @@
               </ul>
             </li>
           </template>
-        </draggable>
+        <!--</draggable>-->
+        </ul>
       </div>
     </div>
     <div class="row mb-5">

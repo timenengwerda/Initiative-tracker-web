@@ -66,7 +66,7 @@
               active: false
             })
           }
-
+          console.log(enemyGroup)
           this.addToAttackOrder(enemyGroup)
 
           this.resetEnemyForm()

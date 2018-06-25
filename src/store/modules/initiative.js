@@ -16,7 +16,7 @@ const actions = {
     context.commit('RESET_ATTACK_ORDER')
   },
   setEnemyHealth(context, dto) {
-    context.commit('SET_ENEMY_HEALTH', dto)
+    context.commit('SET_ENEMY_HEALTH', {enemyObject: dto, getters: context.getters})
   },
   addPlayer(context, dto) {
     context.commit('ADD_PLAYER', { name: dto, type: 'player', initiative: 0 })
@@ -33,7 +33,7 @@ const actions = {
     context.commit('REMOVE_PLAYER_FROM_STORAGE_AND_LIST', index)
   },
   removeEnemyFromList(context, dto) {
-    context.commit('REMOVE_ENEMY_FROM_LIST', dto)
+    context.commit('REMOVE_ENEMY_FROM_LIST', {enemyObject: dto, getters: context.getters})
   }
 }
 
@@ -53,7 +53,8 @@ const mutations = {
     state.attackOrder = []
   },
   SET_ENEMY_HEALTH(state, dto) {
-    state.attackOrder[dto.groupIndex].players[dto.enemyIndex].health = dto.health
+    console.log(state.attackOrder)
+    dto.getters.attackOrder[dto.enemyObject.groupIndex].players[dto.enemyObject.enemyIndex].health = dto.enemyObject.health
   },
   SET_ACTIVE_IN_ATTACK_ORDER(state, index) {
     if (state.attackOrder[index]) {
@@ -110,11 +111,13 @@ const mutations = {
     }
   },
   REMOVE_ENEMY_FROM_LIST(state, dto) {
-    state.attackOrder[dto.groupIndex].players.splice(dto.enemyIndex, 1)
+    dto.getters.attackOrder[dto.enemyObject.groupIndex].players.splice(dto.enemyObject.enemyIndex, 1)
 
     // if no players are left in this group; remove the group from the attackorder
-    if (state.attackOrder[dto.groupIndex].players.length === 0) {
-      state.attackOrder.splice(dto.groupIndex, 1)
+    if (dto.getters.attackOrder[dto.enemyObject.groupIndex].players.length === 0) {
+      dto.getters.attackOrder.splice(dto.enemyObject.groupIndex, 1)
+
+      state.attackOrder = dto.getters.attackOrder
     }
   }
 }

@@ -1,10 +1,11 @@
 .dice-group {
-  flex: 1;
+  §lex: 1;
   margin-right: 5px;
 }
 
 .dice-roller {
     position: fixed;
+    z-index: 999;
     right: 0;
     bottom: 0;
     left: 0;
