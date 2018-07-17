@@ -24,7 +24,8 @@ const getters = {
         return (spell.page.indexOf('phb') === 0) ? spell : false
       })
     }
-    return state.spells
+
+    return _.sortBy(state.spells, ['level']); // sort by 1stlevel, 2ndlevel etc.etc. cantrip
   }
 }
 

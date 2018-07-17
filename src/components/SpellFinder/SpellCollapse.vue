@@ -5,7 +5,7 @@
           <i class="fa fa-chevron-down icon icon--collapsed"></i>
           <i class="fa fa-chevron-up icon icon--uncollapsed"></i>
           {{ spell.name }}
-          <small style="font-size: 11px; margin-left: .25rem;">({{spell.level }})</small>
+          <small style="font-size: 9px; margin-left: .25rem;">({{spell.level }})</small>
           <span v-if="spell.ritual !== 'no'" class="spell-symbol">R</span>
           <span v-if="spell.concentration !== 'no'" class="spell-symbol">C</span>
         </div>

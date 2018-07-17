@@ -28,6 +28,49 @@
             <option value="Wizard">Wizard</option>
           </select>
         </div>
+        <h3>Spell levels:</h3>
+        <div class="level-filter">
+          <div class="level-filter__item">
+            <input id="Cantriplevel" value="Cantrip" type="checkbox" v-model="levelFilter">
+            <label for="Cantriplevel">Cantrip</label>
+          </div>
+          <div class="level-filter__item">
+            <input id="1stlevel" value="1st-level" type="checkbox" v-model="levelFilter">
+            <label for="1stlevel">1st</label>
+          </div>
+          <div class="level-filter__item">
+            <input id="2ndlevel" value="2nd-level" type="checkbox" v-model="levelFilter">
+            <label for="2ndlevel">2nd</label>
+          </div>
+          <div class="level-filter__item">
+            <input id="3rdlevel" value="3rd-level" type="checkbox" v-model="levelFilter">
+            <label for="3rdlevel">3rd</label>
+          </div>
+          <div class="level-filter__item">
+            <input id="4thlevel" value="4th-level" type="checkbox" v-model="levelFilter">
+            <label for="4thlevel">4th</label>
+          </div>
+          <div class="level-filter__item">
+            <input id="5thlevel" value="5th-level" type="checkbox" v-model="levelFilter">
+            <label for="5thlevel">5th</label>
+          </div>
+          <div class="level-filter__item">
+            <input id="6thlevel" value="6th-level" type="checkbox" v-model="levelFilter">
+            <label for="6thlevel">6th</label>
+          </div>
+          <div class="level-filter__item">
+            <input id="7thlevel" value="7th-level" type="checkbox" v-model="levelFilter">
+            <label for="7thlevel">7th</label>
+          </div>
+          <div class="level-filter__item">
+            <input id="8thlevel" value="8th-level" type="checkbox" v-model="levelFilter">
+            <label for="8thlevel">8th</label>
+          </div>
+          <div class="level-filter__item">
+            <input id="9thlevel" value="9th-level" type="checkbox" v-model="levelFilter">
+            <label for="9thlevel">9th</label>
+          </div>
+        </div>
         <div class="autocomplete-search__results spell-finder__search-result">
           <spell-collapse :spell="spell" v-for="(spell, index) in filteredSpells" :key="index" />
         </div>
@@ -54,13 +97,15 @@
       return {
         modalIsOpen: false,
         searchWord: '',
-        classToSearch: ''
+        classToSearch: '',
+        levelFilter: ['Cantrip', '1st-level']
       }
     },
     computed: {
       filteredSpells () {
         let spells = []
         let definitiveSpells = []
+        let spellsFilteredByClass = []
 
         if (this.searchWord.length > 1) {
           spells = this.spells.filter(spell => {
@@ -76,18 +121,25 @@
         }
 
         if (this.classToSearch !== '') {
-          // if searchWord isnt entered get all the spells to filter
+          // if searchWord isnt entered get all the spellsFilteredByLevel to filter
           // if the searchWord IS used, then we already have a spells array
           if (this.searchWord.length < 2) {
             spells = this.spells
           }
 
-          definitiveSpells = spells.filter(spell => {
+          spellsFilteredByClass = spells.filter(spell => {
             return (spell.class.indexOf(this.classToSearch) >= 0) ? spell : false
           })
-
         } else {
-          definitiveSpells = spells
+          spellsFilteredByClass = spells
+        }
+
+        if (this.levelFilter.length) {
+          definitiveSpells = spellsFilteredByClass.filter(spell => {
+            return this.levelFilter.includes(spell.level)
+          })
+        } else {
+          return []
         }
 
         return definitiveSpells
@@ -123,5 +175,19 @@
   height: 100%;
   text-align: center;
   line-height: 51px;
+}
+
+.level-filter {
+  display: flex;
+  flex-wrap: wrap;
+
+  &__item {
+    margin-right: 1rem;
+    width: 85px;
+
+    &:last-child {
+      margin: 0;
+    }
+  }
 }
 </style>
