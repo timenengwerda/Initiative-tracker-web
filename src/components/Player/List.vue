@@ -2,7 +2,7 @@
   <li class="initiative__list__player initiative__list__item player" :class="{'active': player.active}" @click.prevent="setActive()">
     <span class="player__title">{{ player.name }}</span>
     <a href="#" @click.prevent="removePlayer()">
-      <i class="fas fa-trash"></i>
+      <i class="fa fa-trash"></i>
     </a>
   </li>
 </template>

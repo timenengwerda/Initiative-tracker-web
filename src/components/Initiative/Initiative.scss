@@ -1,4 +1,7 @@
 .initiative {
+    margin-bottom: 75px !important;
+    padding-bottom: 75px !important;
+
     &__title-col.col {
         display: flex;
         align-items: center;
@@ -27,18 +30,18 @@
 }
 
 .initiative-ordering-modal {
-  list-style-type: none;
-  padding: 0;
   margin: 0;
-  max-width: 300px;
   margin-bottom: 2rem;
+  padding: 0;
+  max-width: 300px;
+  list-style-type: none;
 
   &__item {
-    padding: 7px 12px;
-    border-bottom: 1px solid $gray-lightest;
     display: flex;
     align-items: center;
     margin: 0 auto;
+    padding: 7px 12px;
+    border-bottom: 1px solid $gray-lightest;
 
     &__title {
       flex: 1;

@@ -3,7 +3,7 @@
     <div class="notes__tabs tabs">
       <div class="tabs__header search">
         <input type="text" v-model="searchTerm" class="search__input form-control" placeholder="Search">
-        <a href="" class="search__close" @click.prevent="searchTerm = ''" v-if="searchTerm != ''"><i class="fas fa-times"></i></a>
+        <a href="" class="search__close" @click.prevent="searchTerm = ''" v-if="searchTerm != ''"><i class="fa fa-times"></i></a>
       </div>
       <div class="tabs__content">
         <div
@@ -14,7 +14,7 @@
           v-if="notes.length > 0">
             <span class="tabs__item__title">{{ note.title }}</span>
             <a href="#" @click.prevent="removeNote($event, index)" class="btn btn-link tabs__item__options">
-              <i class="fas fa-trash"></i>
+              <i class="fa fa-trash"></i>
             </a>
         </div>
         <div class="tabs__item tabs__item--static" v-if="notes.length === 0">No notes found.<br><a href="" @click.prevent="newTab">Create one now</a></div>
@@ -23,7 +23,7 @@
 
       <div class="tabs__footer">
         <a href="#" @click.prevent="newTab">
-          <i class="fas fa-plus"></i>
+          <i class="fa fa-plus"></i>
           New Note
         </a>
         <a href="" @click.prevent="showOptions = !showOptions">
@@ -242,10 +242,10 @@
   position: relative;
 
   &__input {
-    border-radius: 0;
     border-top: 0;
-    border-left: 0;
     border-right: 0;
+    border-left: 0;
+    border-radius: 0;
   }
 
   &__close {
@@ -257,13 +257,13 @@
 
 .options {
   position: absolute;
-  bottom: 40px;
   right: 0;
-  background: $white;
+  bottom: 40px;
   display: flex;
   flex-direction: column;
   padding: 1rem;
-  border-radius: 5px;
   border: 1px solid $gray-lighter;
+  border-radius: 5px;
+  background: $white;
 }
 </style>

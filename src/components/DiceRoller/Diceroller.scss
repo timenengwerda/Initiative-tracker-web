@@ -1,26 +1,24 @@
 .dice-group {
-  §lex: 1;
+  flex: 1;
   margin-right: 5px;
 }
 
 .dice-roller {
-    position: fixed;
-    z-index: 999;
-    right: 0;
+    position: absolute;
     bottom: 0;
-    left: 0;
+    left: -1px;
+    z-index: 800;
+    display: none;
     max-width: 400px;
-    height: 50px;
-    border-radius: 20px 20px 0 0;
-    background-color: rgba($white, .95);
-    box-shadow: 0 1px 3px rgba($black, .3);
-    transition: height .22s ease-out;
-
-    backdrop-filter: blur(4px);
+    width: 100%;
+    border: 1px solid $gray-lighter;
+    transition: transform .22s ease-out;
+    transform: translateY(100%);
 
     &--expanded {
+      display: block;
       /* We need a height for transitions to work properly */
-      height: 240px;
+      transform: translateY(-49px);
     }
 
     &__header {
@@ -28,7 +26,7 @@
       align-items: center;
       justify-content: space-between;
       padding: 1rem;
-      border-bottom: 1px solid rgba($black, .1);
+      width: 65px;
       cursor: pointer;
 
       &__title {
@@ -37,8 +35,21 @@
     }
 
     &__body {
-      padding: 1rem 2rem;
+      position: relative;
+      padding: 1rem;
+      min-height: 190px;
+      border-top: 1px solid rgba($black, .1);
+      background-color: $white;
+
+      .button--close {
+        position: absolute;
+        bottom: 1rem;
+        left: 50%;
+        transform: translateX(-50%);
+      }
     }
+
+
 
     &__outcome {
       margin-bottom: 1rem;
@@ -64,7 +75,12 @@
     display: flex;
     align-items: center;
     flex-direction: column;
+    margin-right: 5px;
     width: 150px;
+
+    &:last-child {
+      margin: 0;
+    }
 
     &:hover {
       height: 85px;
@@ -78,6 +94,7 @@
 
     button {
       padding: 10px;
+      width: 100%;
     }
   }
 }
@@ -100,9 +117,3 @@
   }
 }
 
-
-@media (min-width: 400px) {
-  .dice-roller {
-    right: auto;
-  }
-}

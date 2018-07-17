@@ -2,7 +2,8 @@ import storage from '../storage'
 
 const state = {
   defaultPlayerList: (storage.get('default-player-list')) ? JSON.parse(storage.get('default-player-list')) : [],
-  attackOrder: []
+  attackOrder: [],
+  diceRollerActive: false
 }
 
 const actions = {
@@ -39,6 +40,9 @@ const actions = {
 
 // mutations
 const mutations = {
+  SET_DICE_ROLLER_ACTIVE(state, dto) {
+    state.diceRollerActive = dto
+  },
   ADD_TO_ATTACK_ORDER(state, dto) {
     state.attackOrder.push(dto)
   },
@@ -131,6 +135,7 @@ const getters = {
     return _.orderBy(state.attackOrder, ['initiative'], ['desc'])
   },
   players: state => state.defaultPlayerList,
+  diceRollerActive: state => state.diceRollerActive
 }
 
 export default {

@@ -38,10 +38,7 @@
       </div>
     </modal>
 
-    <div class="text--center mt-2">
-      <br>
-      <a href="#" @click.prevent="showSpellFinderModal">Spellfinder</a>
-    </div>
+    <i class="icon icon--spell-finder fas fa-magic"  @click.prevent="showSpellFinderModal"></i>
   </div>
 </template>
 
@@ -120,4 +117,11 @@
 </script>
 <style lang="scss">
 @import './SpellFinder';
+
+.icon--spell-finder {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  line-height: 51px;
+}
 </style>

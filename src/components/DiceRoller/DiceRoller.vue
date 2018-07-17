@@ -1,14 +1,6 @@
 <template>
   <div class="dice-roller" :class="{ 'dice-roller--expanded' : isActive }">
-
-    <header class="dice-roller__header" @click="collapseExpand()">
-      <h2 class="dice-roller__header__title">Diceroller</h2>
-      <span v-show="isActive"><i class="fas fa-chevron-down"></i></span>
-      <span v-show="!isActive"><i class="fas fa-chevron-up"></i></span>
-    </header>
-
     <section class="dice-roller__body">
-
       <div class="dice-roller__outcome">
         {{ stringifiedOutcome }}
       </div>
@@ -23,22 +15,26 @@
           </div>
         </li>
       </ul>
+
+      <button class="button--close button button--link" @click.prevent="toggleDiceRoller">Close</button>
     </section>
   </div>
 </template>
 
 <script>
-
+  import { mapGetters } from 'vuex'
   export default {
     name: 'Diceroller',
     data () {
       return {
         outcome: [],
-        isActive: false,
         dices: [ 20, 8, 12, 6, 10, 4]
       }
     },
     computed: {
+      ...mapGetters({
+        isActive: 'diceRollerActive'
+      }),
       stringifiedOutcome () {
         if (this.outcome.length === 0) {
           return '-'
@@ -81,6 +77,9 @@
       },
       randomInt(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
+      },
+      toggleDiceRoller () {
+        this.$store.commit('SET_DICE_ROLLER_ACTIVE', !this.isActive)
       }
     }
   }
