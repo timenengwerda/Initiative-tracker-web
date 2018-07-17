@@ -1,0 +1,52 @@
+.spell-finder {
+  &__header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+
+  &__title {
+    flex: 1;
+    margin: 0;
+  }
+
+  &__phb-toggle {
+    label {
+      margin-bottom: 0;
+      font-size: 13px !important;
+    }
+  }
+
+  &__search-result {
+    .search-collapse__title {
+      display: flex;
+      align-items: center;
+    }
+
+
+    &__name {
+      display: flex;
+      align-items: center;
+      flex: 1;
+
+      .icon {
+        margin-right: .75rem;
+      }
+    }
+
+    &__quickbar {
+      max-width: 150px;
+      text-align: right;
+      font-weight: $font-weight-normal;
+      font-size: 13px;
+    }
+  }
+}
+
+.spell-symbol {
+  margin-left: .33rem;
+  padding: 1px 5px;
+  background-color: $black;
+  color: $white;
+  font-size: 14px;
+}

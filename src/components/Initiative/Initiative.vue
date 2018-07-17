@@ -26,7 +26,6 @@
     </div>
     <div class="row">
       <div class="col">
-        <!--<draggable :element="'ul'" :options="{animation: 100, handle: '.dragger'}" class="sortable initiative__list" ref="">-->
         <ul class="sortable initiative__list">
           <template v-for="(order, orderIndex) in attackOrder">
             <player-list
@@ -47,7 +46,6 @@
               </ul>
             </li>
           </template>
-        <!--</draggable>-->
         </ul>
       </div>
     </div>

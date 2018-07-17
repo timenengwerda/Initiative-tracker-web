@@ -8,6 +8,7 @@
         <div class="text--center hidden--md-down">
           <a href="#" @click.prevent="startUsingNotes">Toggle notes</a>
         </div>
+        <spell-finder/>
       </div>
       <div class="col--md-7" v-if="showNotes">
         <notes />
@@ -20,6 +21,7 @@
   import { mapActions, mapGetters } from 'vuex'
   import Initiative from '@/components/Initiative/Initiative'
   import DiceRoller from '@/components/DiceRoller/DiceRoller'
+  import SpellFinder from '@/components/SpellFinder/SpellFinder'
   import Notes from '@/components/Notes/Notes'
 
   export default {
@@ -27,6 +29,7 @@
     components: {
       Initiative,
       DiceRoller,
+      SpellFinder,
       Notes
     },
     computed: {

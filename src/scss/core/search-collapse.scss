@@ -1,0 +1,33 @@
+.search-collapse {
+  margin-bottom: 1rem;
+  padding: .5rem 0;
+  border-bottom: 1px solid $gray-lighter;
+
+  &__title {
+    padding: .5rem 1rem;
+    font-weight: $font-weight-bold;
+    cursor: pointer;
+  }
+
+  &__item {
+    padding: 0 1rem 1rem;
+  }
+
+  .icon--uncollapsed {
+    display: none;
+  }
+
+  .icon--collapsed {
+    display: block;
+  }
+
+  &.is--uncollapsed {
+    .icon--collapsed {
+      display: none;
+    }
+
+    .icon--uncollapsed {
+      display: block;
+    }
+  }
+}

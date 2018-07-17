@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import Tool from '@/components/Tool'
 
 Vue.use(Router)
 
@@ -7,12 +8,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'tool',
-      component: require('@/components/Tool').default
-    },
-    {
-      path: '*',
-      redirect: '/'
+      name: 'Tool',
+      component: Tool
     }
   ]
 })
