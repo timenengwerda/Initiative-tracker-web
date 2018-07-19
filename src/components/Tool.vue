@@ -19,6 +19,8 @@
   import BottomBar from '@/components/BottomBar/BottomBar'
   import SpellFinder from '@/components/SpellFinder/SpellFinder'
   import Notes from '@/components/Notes/Notes'
+  import firebase from 'firebase/app'
+  import 'firebase/auth'
 
   export default {
     name: 'tool',
@@ -31,7 +33,8 @@
     },
     computed: {
       ...mapGetters([
-        'showNotes'
+        'showNotes',
+        'user'
       ]),
       wrapperClass () {
         return (this.showNotes) ? 'col--md-5 scroller' : 'col--md-4 col--md-offset-4'
@@ -39,6 +42,13 @@
       wrapperClassBottomBar () {
         return (this.showNotes) ? 'col--md-5' : 'col--md-4 col--md-offset-4'
       }
+    },
+    mounted () {
+      firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+          this.$store.dispatch('getUser', user.uid)
+        }
+      })
     }
   }
 </script>
@@ -49,7 +59,7 @@
 
   > .row--initiative {
     margin-bottom: 0;
-    min-height: 100vh;
+    height: 100vh;
   }
 }
 

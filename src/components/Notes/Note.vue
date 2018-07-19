@@ -96,8 +96,8 @@
     },
     methods: {
       saveNote () {
-        this.$store.commit('UPDATE_NOTES_IN_STORAGE')
         this.$store.commit('UPDATE_SAVE_STATUS', {noteId: this.id, timestamp: Date.now()})
+        this.$store.dispatch('saveExistingNote', this.id)
       }
     }
   }
