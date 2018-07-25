@@ -71,6 +71,10 @@
             <input id="9thlevel" value="9th-level" type="checkbox" v-model="levelFilter">
             <label for="9thlevel">9th</label>
           </div>
+          <div class="level-filter__item">
+            <input id="select-all" v-model="allFiltersSelected" type="checkbox" @change.prevent="selectAllFilters">
+            <label for="select-all">All</label>
+          </div>
         </div>
         <div class="autocomplete-search__results spell-finder__search-result">
           <spell-collapse :spell="spell" v-for="(spell, index) in filteredSpells" :key="index" />
@@ -99,7 +103,8 @@
         modalIsOpen: false,
         searchWord: '',
         classToSearch: '',
-        levelFilter: ['Cantrip', '1st-level']
+        levelFilter: ['Cantrip', '1st-level'],
+        allFiltersSelected: false
       }
     },
     computed: {
@@ -156,6 +161,13 @@
       ...mapGetters(['spells'])
     },
     methods: {
+      selectAllFilters () {
+        if (this.allFiltersSelected) {
+          this.levelFilter = ['Cantrip', '1st-level', '2nd-level', '3rd-level', '4th-level', '5th-level', '6th-level', '7th-level', '8th-level', '9th-level']
+        } else {
+          this.levelFilter = []
+        }
+      },
       showSpellFinderModal () {
         this.modalIsOpen = true
         this.searchWord = ''
