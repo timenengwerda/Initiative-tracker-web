@@ -25,6 +25,7 @@
             <option value="Ranger">Ranger</option>
             <option value="Ritual Caster">Ritual Caster</option>
             <option value="Sorcerer">Sorcerer</option>
+            <option value="Warlock">Warlock</option>
             <option value="Wizard">Wizard</option>
           </select>
         </div>
