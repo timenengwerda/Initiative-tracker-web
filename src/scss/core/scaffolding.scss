@@ -6,13 +6,14 @@
 }
 
 html {
-  min-height: 100vh;
+  height: 100vh;
 
   -webkit-font-smoothing: antialiased;
 }
 
 body {
-  min-height: 100vh;
+  overflow: auto;
+  height: 100vh;
   background-color: $body-background;
   color: $text-color;
   font-weight: $font-weight-light;
@@ -27,6 +28,10 @@ body {
   &.no-scroll {
     overflow: hidden;
   }
+}
+
+#app {
+  height: 100%;
 }
 
 .logo {
@@ -56,22 +61,22 @@ hr {
 
 // sass-lint:disable no-ids
 #main-wrapper {
-  min-height: 100vh;
+  // min-height: 100vh;
   width: 100%;
 }
 
 .container--fullscreen {
-  min-height: 100vh;
+  // min-height: 100vh;
   background-image: url('/images/background-drops.png');
 
   > .grid {
-    min-height: 100vh;
+    // min-height: 100vh;
   }
 }
 
 .scroller {
   overflow-y: auto;
-  padding-bottom: 100px !important;
+  // padding-bottom: 100px !important;
 }
 
 .sweet-alert p {

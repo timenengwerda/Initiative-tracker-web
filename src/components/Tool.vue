@@ -1,7 +1,7 @@
 <template>
   <div class="grid grid--fluid tracker-wrapper">
     <div class="row row--initiative">
-      <div :class="wrapperClass" style="position: relative;">
+      <div :class="wrapperClass" class="tracker-row" style="position: relative;">
         <initiative/>
         <bottom-bar />
       </div>
@@ -55,12 +55,19 @@
 <style lang="scss">
 .tracker-wrapper {
   overflow: hidden;
-  padding-bottom: 100px;
+  height: 100%;
 
   > .row--initiative {
+    overflow: auto;
     margin-bottom: 0;
-    height: 100vh;
+    height: 100%;
+    // min-height: 100vh;
   }
+}
+
+.tracker-row {
+  display: flex;
+  flex-direction: column;
 }
 
 </style>
