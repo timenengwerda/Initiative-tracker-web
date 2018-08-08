@@ -11,7 +11,7 @@
               <ul class="initiative-ordering-modal">
                 <li v-for="item in initiativeOrderingList" class="initiative-ordering-modal__item">
                   <span class="initiative-ordering-modal__item__title" v-if="item.type === 'player'">{{item.name}}</span>
-                  <span class="initiative-ordering-modal__item__title" v-else>{{item.players[0].name.replace('#1', '')}}</span>
+                  <span class="initiative-ordering-modal__item__title" v-else>{{item.players[0].name.substr(2)}}</span>
 
                   <input type="number" placeholder="#" v-model="item.initiative" class="form-control initiative-ordering-modal__item__form-control">
                   <a class="initiative-ordering-modal__item__roll-button" href="#" v-if="item.type !== 'player'" @click.prevent="rollForInitiative(item)">roll</a>
@@ -131,6 +131,7 @@
       showOrderingList () {
         // this.resetInitiative()
         this.$modal.show('initiative-ordering-modal')
+        this.initiativeOrderingList = _.cloneDeep(this.attackOrder) // update the ordering list just in case
       },
       hideOrderingList () {
         this.$modal.hide('initiative-ordering-modal')
@@ -156,6 +157,7 @@
         })
 
         this.hideOrderingList()
+        this.initiativeOrderingList = _.cloneDeep(this.attackOrder)
       },
       addSortables () {
         jQuery( this.$refs.sortableOrder ).sortable({

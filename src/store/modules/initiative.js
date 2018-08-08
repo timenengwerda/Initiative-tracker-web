@@ -57,7 +57,6 @@ const mutations = {
     state.attackOrder = []
   },
   SET_ENEMY_HEALTH(state, dto) {
-    console.log(state.attackOrder)
     dto.getters.attackOrder[dto.enemyObject.groupIndex].players[dto.enemyObject.enemyIndex].health = dto.enemyObject.health
   },
   SET_ACTIVE_IN_ATTACK_ORDER(state, index) {
